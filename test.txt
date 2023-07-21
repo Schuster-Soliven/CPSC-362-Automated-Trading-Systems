@@ -1,0 +1,23 @@
+.EE
+======================================================================
+ERROR: test_list_int (__main__.Test02_AccurateDayCount)
+*** Test02 *** Opens JSON File and counts items in list ***
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/stileco_/SchoolStuff/CPSC362/CPSC-362-Automated-Trading-Systems/test.py", line 49, in test_list_int
+    with open(dataFile) as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'FNGD.JSON'
+
+======================================================================
+ERROR: test_list_int (__main__.Test03_MatchDay)
+*** Test03 *** Data is consistent with a given day ***
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/stileco_/SchoolStuff/CPSC362/CPSC-362-Automated-Trading-Systems/test.py", line 61, in test_list_int
+    with open(dataFile) as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'FNGD.JSON'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+FAILED (errors=2)
