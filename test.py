@@ -6,7 +6,7 @@ import json
 
 from download_data import *
 
-dataFile = 'FNGD.JSON'
+dataFile = 'FNGD_data.json'
 
 
 import os
@@ -21,11 +21,15 @@ class Test01_FileContentsIsList(unittest.TestCase):
         *** Test01 *** JSON file with ETF data exists ***
         """
         #change prints to .assertEqual()
+        download_and_save("FNGD", start="2020-01-01", end=yesterday_str)
         try:
+            print('1')
             with open(dataFile) as f:
                 # call download function and dump into f
+                print('2')
                 data = json.load(f)
                 # load dataFile contents into data
+                print(type(data))
                 self.assertEqual('list', type(data))
                 # making sure data is type list
                 # conversely 'list' to <class 'list'>
