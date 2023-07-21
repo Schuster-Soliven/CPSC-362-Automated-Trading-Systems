@@ -18,9 +18,8 @@ def remove_file(filename):
 class Test01_FileContentsIsList(unittest.TestCase):
     def test_list_int(self):
         """
-        *** Test01 *** JSON file with ETF data exists ***
+        *** Test01 *** JSON file with ETF data exists for FNGD***
         """
-        #change prints to .assertEqual()
         download_and_save("FNGD", start="2020-01-01", end=yesterday_str)
         try:
             with open(dataFile) as f:
@@ -29,7 +28,6 @@ class Test01_FileContentsIsList(unittest.TestCase):
                 # load dataFile contents into data
                 self.assertEqual(list, type(data))
                 # making sure data is type list
-                # conversely 'list' to <class 'list'>
         except FileNotFoundError:
             print("FAIL: File not found")
 
@@ -37,18 +35,20 @@ class Test01_FileContentsIsList(unittest.TestCase):
             print("FAIL: Unable to parse JSON")
             
         remove_file(dataFile)
-            
-'''       
+
+'''   
 class Test02_AccurateDayCount(unittest.TestCase):
     def test_list_int(self):
         """
         *** Test02 *** Opens JSON File and counts items in list ***
         """
         #data should be a list of dictionaries
+        download_and_save("FNGD", start="2020-01-01", end=yesterday_str)
         with open(dataFile) as f:
             data = json.load(f)
-        self.assertEqual(len(data), 100)
-        #change 100
+            if (len(data) >= 890):
+                key = True
+            self.assertEqual(key, True)
         remove_file(dataFile)
 
 class Test03_MatchDay(unittest.TestCase):

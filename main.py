@@ -13,6 +13,7 @@ while (user_input != 'U' and user_input != 'D') :
 
 print('We will download targeted data from Yahoo Finance starting from 2020 January 1')
 
+# Download data!
 if (user_input == 'D') : 
     download_and_save("FNGD", start="2020-01-01", end=yesterday_str)
 else:
