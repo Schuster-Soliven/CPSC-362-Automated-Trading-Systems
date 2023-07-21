@@ -1,16 +1,5 @@
-E
-======================================================================
-ERROR: test_list_int (__main__.Test01_FileContentsIsList)
-*** Test01 *** JSON file with ETF data exists for FNGD***
+.
 ----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/home/stileco_/SchoolStuff/CPSC362/CPSC-362-Automated-Trading-Systems/test.py", line 29, in test_list_int
-    self.assertIsInstance(list, data)
-  File "/usr/lib/python3.10/unittest/case.py", line 1267, in assertIsInstance
-    if not isinstance(obj, cls):
-TypeError: isinstance() arg 2 must be a type, a tuple of types, or a union
+Ran 1 test in 0.223s
 
-----------------------------------------------------------------------
-Ran 1 test in 0.262s
-
-FAILED (errors=1)
+OK
