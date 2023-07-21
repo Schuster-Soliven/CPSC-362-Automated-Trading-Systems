@@ -11,16 +11,3 @@ def download_and_save(ticker, start, end):
     data = yf.download(ticker, start=start, end=end)
     data = data[["Open", "High", "Low", "Close", "Volume"]]  # select necessary columns
     data.reset_index(inplace=True)  # to include date in the json file
-    data.to_json(f"{ticker}_data.json", orient="records", date_format="iso")
-
-# Interact with the user
-print("Hello user, do you want to download stock data? (y/n)")
-user_input = input()
-
-if user_input.lower() == 'y':
-    # Download and save the data
-    download_and_save("FNGU", start="2020-01-01", end=yesterday_str)
-    download_and_save("FNGD", start="2020-01-01", end=yesterday_str)
-    print("Data has been downloaded and saved successfully!")
-else:
-    print("OK, bye bye!")
