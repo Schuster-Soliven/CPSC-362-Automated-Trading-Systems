@@ -6,7 +6,7 @@ import json
 
 from download_data import *
 
-dataFile = 'FNGD_data.json'
+dataFile = 'FNGU_data.json'
 
 
 import os
@@ -30,7 +30,7 @@ class Test01_FileContentsIsList(unittest.TestCase):
                 data = json.load(f)
                 # load dataFile contents into data
                 print(type(data))
-                self.assertEqual('list', type(data))
+                self.assertEqual(list, type(data))
                 # making sure data is type list
                 # conversely 'list' to <class 'list'>
     

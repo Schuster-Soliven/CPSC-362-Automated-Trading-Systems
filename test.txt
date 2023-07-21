@@ -1,47 +1,23 @@
-FFF
+.EE
 ======================================================================
-FAIL: test_list_int (__main__.Test01_FileContentsIsList)
-*** Test01 *** JSON file with ETF data exists ***
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/home/stileco_/SchoolStuff/CPSC362/CPSC-362-Automated-Trading-Systems/test.py", line 33, in test_list_int
-    self.assertEqual('int', type(data))
-AssertionError: 'int' != <class 'list'>
-
-======================================================================
-FAIL: test_list_int (__main__.Test02_AccurateDayCount)
+ERROR: test_list_int (__main__.Test02_AccurateDayCount)
 *** Test02 *** Opens JSON File and counts items in list ***
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/stileco_/SchoolStuff/CPSC362/CPSC-362-Automated-Trading-Systems/test.py", line 55, in test_list_int
-    self.assertEqual(len(data), 100)
-AssertionError: 891 != 100
+  File "/home/stileco_/SchoolStuff/CPSC362/CPSC-362-Automated-Trading-Systems/test.py", line 53, in test_list_int
+    with open(dataFile) as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'FNGU_data.json'
 
 ======================================================================
-FAIL: test_list_int (__main__.Test03_MatchDay)
+ERROR: test_list_int (__main__.Test03_MatchDay)
 *** Test03 *** Data is consistent with a given day ***
 ----------------------------------------------------------------------
 Traceback (most recent call last):
-  File "/home/stileco_/SchoolStuff/CPSC362/CPSC-362-Automated-Trading-Systems/test.py", line 67, in test_list_int
-    self.assertEqual(data[0], {"Date":"2020-01-02T00:00:00.000","Open":62.1199989319,"High":65.2099990845,"Low":62.0800018311,"Close":65.2099990845,"Volume":155900})
-AssertionError: {'Dat[34 chars]en': 2130.0, 'High': 2130.0, 'Low': 2012.0, 'C[25 chars]1746} != {'Dat[34 chars]en': 62.1199989319, 'High': 65.2099990845, 'Lo[55 chars]5900}
-- {'Close': 2012.0,
-+ {'Close': 65.2099990845,
-   'Date': '2020-01-02T00:00:00.000',
--  'High': 2130.0,
--  'Low': 2012.0,
--  'Open': 2130.0,
-+  'High': 65.2099990845,
-+  'Low': 62.0800018311,
-+  'Open': 62.1199989319,
--  'Volume': 1746}
-?             ^^^
-
-+  'Volume': 155900}
-?             ^^^^^
-
+  File "/home/stileco_/SchoolStuff/CPSC362/CPSC-362-Automated-Trading-Systems/test.py", line 65, in test_list_int
+    with open(dataFile) as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'FNGU_data.json'
 
 ----------------------------------------------------------------------
-Ran 3 tests in 0.220s
+Ran 3 tests in 0.223s
 
-FAILED (failures=3)
+FAILED (errors=2)
