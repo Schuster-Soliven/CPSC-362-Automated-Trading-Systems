@@ -11,4 +11,3 @@ def download_and_save(ticker, start, end):
     data = yf.download(ticker, start=start, end=end)
     data = data[["Open", "High", "Low", "Close", "Volume"]]  # select necessary columns
     data.reset_index(inplace=True)  # to include date in the json file
-    data.to_json(f"{ticker}_data.json", orient="records", date_format="iso")
