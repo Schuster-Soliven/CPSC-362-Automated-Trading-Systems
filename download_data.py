@@ -12,8 +12,3 @@ def download_and_save(ticker, start, end):
     data = data[["Open", "High", "Low", "Close", "Volume"]]  # select necessary columns
     data.reset_index(inplace=True)  # to include date in the json file
     data.to_json(f"{ticker}_data.json", orient="records", date_format="iso")
-
-
-# Download and save the data
-download_and_save("FNGU", start="2020-01-01", end=yesterday_str)
-download_and_save("FNGD", start="2020-01-01", end=yesterday_str)
