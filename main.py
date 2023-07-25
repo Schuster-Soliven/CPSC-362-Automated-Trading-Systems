@@ -35,6 +35,10 @@ while(user_input != 'B' or user_input != 'M' or user_input != 'T'):
     user_input = input('Bollinger-Band-Bounce (B)\nMoving-Average (M)\nTrust the system (T)\n')
 print('Strategy chosen, returns are being calculated.')
 
+# backtest
+# returns are calculated
+# user another strategy?
+# try program again?
 
 # End Program
 print('Program will be terminated, we thank you for using HARE.')
