@@ -1,4 +1,4 @@
-from download_data import *
+#dfrom download_data import *
 from yf_api import *
 
 # Introduction Prompt
@@ -11,7 +11,7 @@ print('Which ETF would you like to examine?')
 
 user_input = 'NULL'
 while (user_input != 'U' and user_input != 'D') :
-    etf = input('FNGD (D) or FNGU (U)?')
+    user_input = input('FNGD (D) or FNGU (U)?')
 
 print('We will download targeted data from Yahoo Finance starting from 2020 January 1')
 
@@ -26,7 +26,7 @@ print('Download successful.')
 
 
 # Select Range
-while((int != type(user_input) or user_input <= 1012020)):
+while((int != type(user_input) or user_input <= int("01012020"))):
     # change if to be acceptable
     user_input = input('Please enter a start date (MMDDYYYY) of which will contain ETF information until the end date of (yesterday). Note that the maximum range is 01012020: ')
 print('Date is within expected range. Data will now range from ' + user_input + ' to yesterday\'s date.')
