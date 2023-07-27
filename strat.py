@@ -28,10 +28,6 @@ def BandBounce(file, window=20):
     #call backtesting module
     #print(callist)
 
-
-
-BandBounce(choose_date())
-
 # use 20 days as data points
 def MovAvg(ticker):
     # iter over dictionary taking close data
@@ -84,3 +80,4 @@ def MovAvg(ticker):
     call backtest
     '''
     print('average')
+BandBounce(choose_date())
