@@ -1,7 +1,9 @@
-
 import time
 import datetime
 import pandas as pd
+from datetime import datetime, timedelta
+
+
 
 # choose date based on user inputed etf
 def choose_date(str1='FNGU', str2='01012020'):
@@ -9,10 +11,17 @@ def choose_date(str1='FNGU', str2='01012020'):
     month = int(str2[0:2])
     day = int(str2[2:4])
     year = int(str2[4:8])
+    
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday_str = yesterday.strftime("%m%d%Y")
+
+    ymonth = int(yesterday_str[0:2])
+    yday = int(yesterday_str[2:4])
+    yyear = int(yesterday_str[4:8])
     # start date
     period1 = int(time.mktime(datetime.datetime(year, month, day, 23, 59).timetuple()))
     # yesterday's date
-    period2 = int(time.mktime(datetime.datetime(2023, 7, 24, 23, 59).timetuple()))
+    period2 = int(time.mktime(datetime.datetime(yyear, ymonth, yday, 23, 59).timetuple()))
     interval = '1d' 
     # grabs data
     API_endpoint = f'https://query1.finance.yahoo.com/v7/finance/download/{ticker}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
