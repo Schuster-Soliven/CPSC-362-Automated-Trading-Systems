@@ -1,4 +1,5 @@
 from download_data import *
+from yf_api import *
 
 # Introduction Prompt
 print('Welcome to HARE (Highly Advanced Rapid Exchange).')
@@ -10,15 +11,17 @@ print('Which ETF would you like to examine?')
 
 user_input = 'NULL'
 while (user_input != 'U' and user_input != 'D') :
-    user_input = input('FNGD (D) or FNGU (U)?')
+    etf = input('FNGD (D) or FNGU (U)?')
 
 print('We will download targeted data from Yahoo Finance starting from 2020 January 1')
 
 # Download data!
-if (user_input == 'D') : 
-    download_and_save("FNGD", start="2020-01-01", end=yesterday_str)
+date = 'NULL'
+if (date == 'D') : 
+    # download_and_save("FNGD", start="2020-01-01", end=yesterday_str)
+    choose_date('FNGD')
 else:
-    download_and_save("FNGU", start="2020-01-01", end=yesterday_str)
+   choose_date()
 print('Download successful.')
 
 
