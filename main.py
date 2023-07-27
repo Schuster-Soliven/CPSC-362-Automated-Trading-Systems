@@ -1,5 +1,6 @@
-from download_data import *
 from yf_api import *
+from displayGraph import plot_data
+import datetime
 
 # Introduction Prompt
 print('Welcome to HARE (Highly Advanced Rapid Exchange).')
@@ -12,31 +13,62 @@ print('Which ETF would you like to examine?')
 user_input = 'NULL'
 while (user_input != 'U' and user_input != 'D') :
     etf = input('FNGD (D) or FNGU (U)?')
+    user_input = etf.upper()
 
 print('We will download targeted data from Yahoo Finance starting from 2020 January 1')
 
+# # Download data!
+# if (user_input == 'D'):
+#     df = choose_date('FNGD')
+# else:
+#     df = choose_date()
+
+# print('Download successful.')
+
 # Download data!
-date = 'NULL'
-if (date == 'D') : 
-    # download_and_save("FNGD", start="2020-01-01", end=yesterday_str)
-    choose_date('FNGD')
+if (user_input == 'D'):
+    df = choose_date('FNGD', '01012020')
 else:
-   choose_date()
+    df = choose_date('FNGU', '01012020')
+
 print('Download successful.')
 
+# Convert 'Date' column to datetime objects
+df['Date'] = pd.to_datetime(df['Date'])
 
-# Select Range
-while((int != type(user_input) or user_input <= 1012020)):
-    # change if to be acceptable
-    user_input = input('Please enter a start date (MMDDYYYY) of which will contain ETF information until the end date of (yesterday). Note that the maximum range is 01012020: ')
-print('Date is within expected range. Data will now range from ' + user_input + ' to yesterday\'s date.')
+# Get the start date from the user
+while True:
+    user_input = input("Please enter a start date (MMDDYYYY) to display the graph: ")
+    try:
+        start_date = datetime.datetime.strptime(user_input, '%m%d%Y')
+        if start_date >= datetime.datetime(2020, 1, 1) and start_date <= datetime.datetime.now() - datetime.timedelta(days=1):
+            break
+        else:
+            print("Invalid date. Please enter a date between 01012020 and yesterday's date.")
+    except ValueError:
+        print("Invalid date format. Please use MMDDYYYY format.")
+
+print(f'Date is within expected range. Data will now range from {user_input} to yesterday\'s date.')
+
+# Filter DataFrame based on the user's input date
+df = df[df['Date'] >= start_date]
+
+# Display graph
+plot_data(df, user_input)
+
 
 # User prompt to choose strategy
-print('The user is automatically given to have $100,000 before strategy simulation.')
-while(user_input != 'B' or user_input != 'M' or user_input != 'T'):
-    print('Which type of strategy would the user like to use?')
+while True:
+    print('Which type of strategy would you like to use?')
     user_input = input('Bollinger-Band-Bounce (B)\nMoving-Average (M)\nTrust the system (T)\n')
+    user_input = user_input.upper()
+    if user_input in ['B', 'M', 'T']:
+        break
+    else:
+        print("Invalid input. Please choose one of the provided options.")
+
 print('Strategy chosen, returns are being calculated.')
+
 
 # backtest
 # returns are calculated
@@ -44,4 +76,4 @@ print('Strategy chosen, returns are being calculated.')
 # try program again?
 
 # End Program
-print('Program will be terminated, we thank you for using HARE.')
+print('Program will be terminated. Thank you for using HARE.')

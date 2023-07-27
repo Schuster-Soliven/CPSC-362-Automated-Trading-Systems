@@ -11,7 +11,7 @@ def choose_date(str1='FNGU', str2='01012020'):
     month = int(str2[0:2])
     day = int(str2[2:4])
     year = int(str2[4:8])
-    
+
     yesterday = datetime.now() - timedelta(days=1)
     yesterday_str = yesterday.strftime("%m%d%Y")
     print()
@@ -23,14 +23,14 @@ def choose_date(str1='FNGU', str2='01012020'):
     period1 = int(time.mktime(datetime(year, month, day, 23, 59).timetuple()))
     # yesterday's date
     period2 = int(time.mktime(datetime(yyear, ymonth, yday, 23, 59).timetuple()))
-    interval = '1d' 
+    interval = '1d'
     # grabs data
     API_endpoint = f'https://query1.finance.yahoo.com/v7/finance/download/{ticker}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
     df = pd.read_csv(API_endpoint)
     # print me
     print(df)
     # json file dictionary wrong
-    
+
     #df.reset_index(inplace=True)
     print(df)
     # what is f and what is r
