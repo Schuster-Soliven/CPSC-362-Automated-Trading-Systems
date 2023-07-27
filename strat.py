@@ -26,54 +26,70 @@ def BandBounce(file, window=20):
             callist.append(0)
 
     #call backtesting module
-    #print(callist)
+    return callist
 
 # use 20 days as data points
-def MovAvg(ticker):
+def MovAvg(etf_data):
     # iter over dictionary taking close data
     # check previous data point and next data point. If next data point is under or below the average, buy or sell
     
     #should print all close indices
+    '''
+    count = 0
     for x in ticker['Close']:
-        print(x)
-
-    counter = 20
+        count += 1
+    print(count)
+    '''
+    # rge is range of indices
+    rge = 20
+    # i is index
     i = 0
+    # iD is distance from index
+    iD = 0
+    # sum is summation of x indices
     sum = 0
+    # average is avg of sum
     average = 0
-    while(i < 20):
-        average_list[i] = ticker['Close'][i]
-        
+    # holds the list to compare to close dictionary
     average_list = []
-    for x in ticker['Close']:
-        if(i < 20):
-            i+=1
-            average_list.append(x)
-        else:
-            break
+    # first 20 close values append into average_list
+    while(i < 20):
+        average_list.append(etf_data['Close'][i])
+        i += 1
+    # reset index
     i = 0
- 
+
     # should iterate starting from 0, and summate 20 indices and calculate avg 
-    while(i < len(ticker['Close'])):
-        if (counter < 20):
+    # logic check needed: if 20 values are in avg list, and after x is averaged after 20 indices, and that average is appended to the end
+    # of the average_list, the first value of average corresponds with 0. The average of etf_data indices 0 to 19 will correspond to average_list[0]. 
+    # Thus len(etf_data['Close']) - 20 to len(etf_data['Close']) will correspond to average_list[len(average_list)-1]
+    # This would mean that etf_data['Close'] are of equal length to average_list
+    while(i < len(etf_data['Close'])):
+        if (i + iD == len(etf_data['Close'])):
+            # end average list
+            break
+        elif (iD < rge):
             # sum of 20 
-            sum += ticker['Close'][i]
-        elif (counter == 20):
+            sum += etf_data['Close'][i+iD]
+            iD += 1
+        elif (iD == rge):
             # average it
-            average = sum/20
+            #reset sum and iD and increment i by 1
+            average = sum/rge
             average_list.append(average)
-        else:
-            #reset sum
+            average = 0
             sum = 0
+            iD = 0
+            i += 1
+        else:
+            print('do nothing')
+
     
     #now iterate through ticker list of close and compare average_list to choose when to buy or sell or nothing
-    while(i < len(ticker['Close'])):
-        
-        print('')
-
     '''
-    read file
-    x is average of 20 days of close price
+    b = previous point in etf_data
+    x = next point in etf_data
+    a = x point in average_list
     if b < x < a:
       sell
     if b > x > a:
@@ -82,7 +98,30 @@ def MovAvg(ticker):
       do nothing
     call backtest
     '''
-    print('average')
+    for x in average_list:
+        print(x)
+    return average_list
 
 # testing
-BandBounce(choose_date())
+print(BandBounce(choose_date('FNGD', '05012023')))
+
+'''
+avg_list = MovAvg(choose_date('FNGD', '05012023'))
+c_list = choose_date('FNGD', '05012023')
+
+print(len(avg_list))
+print(len(c_list['Close']))
+
+counter = 0
+
+print('Close Dates')
+while(counter < len(c_list['Close'])):
+    print(c_list['Close'][counter]) 
+    counter += 1
+    
+print('Average List')
+for x in avg_list:
+    print(x)
+    #counter += 1
+#print(counter)
+'''

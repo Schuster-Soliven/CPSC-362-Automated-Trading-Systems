@@ -39,4 +39,4 @@ def create_file(ticker='FNGU', start_date='01012020'):
     file1.write(df.to_json())
     file1.close()
 
-create_file('FNGD', '07202023') 
+create_file('FNGD', '05012023') 
