@@ -41,6 +41,9 @@ def MovAvg(ticker):
     i = 0
     sum = 0
     average = 0
+    while(i < 20):
+        average_list[i] = ticker['Close'][i]
+        
     average_list = []
     for x in ticker['Close']:
         if(i < 20):
@@ -80,4 +83,6 @@ def MovAvg(ticker):
     call backtest
     '''
     print('average')
+
+# testing
 BandBounce(choose_date())

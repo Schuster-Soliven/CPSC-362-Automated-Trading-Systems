@@ -2,7 +2,8 @@ import time
 import pandas as pd
 from datetime import datetime, timedelta
 
-def choose_date(etf='FNGU', start_date='01012020'):
+def choose_date(ticker='FNGU', start_date='01012020'):
+    print('Grabbing data') 
     month = int(start_date[0:2])
     day = int(start_date[2:4])
     year = int(start_date[4:8])
@@ -20,12 +21,22 @@ def choose_date(etf='FNGU', start_date='01012020'):
     interval = '1d' 
 
     # API endpoint
-    url = f'https://query1.finance.yahoo.com/v7/finance/download/{etf}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
+    url = f'https://query1.finance.yahoo.com/v7/finance/download/{ticker}?period1={period1}&period2={period2}&interval={interval}&events=history&includeAdjustedClose=true'
 
     # Get data
     df = pd.read_csv(url)
 
     # Save dataframe to JSON file
-    df.to_json(f"{etf}.json", orient="records", date_format="iso")
+    df.to_json(f"{ticker}.json", orient="records", date_format="iso")
 
     return df
+
+def create_file(ticker='FNGU', start_date='01012020'):
+    print('Creating file')
+    file1 = open(ticker+'.json', 'w')
+    # why do I need to put to json again
+    df = choose_date(ticker, start_date)
+    file1.write(df.to_json())
+    file1.close()
+
+create_file('FNGD', '07202023') 
