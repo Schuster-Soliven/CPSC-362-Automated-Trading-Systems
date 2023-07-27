@@ -14,7 +14,7 @@ def remove_file(filename):
     if os.path.exists(filename):
         os.remove(filename)
 
-
+# Fix me to work with yf_api
 class Test01_FileContentsIsList(unittest.TestCase):
     def test_list_int(self):
         """
@@ -61,6 +61,11 @@ class Test03_MatchDay(unittest.TestCase):
             data = json.load(f)
         self.assertEqual(data[0], {"Date":"2020-01-02T00:00:00.000","Open":62.1199989319,"High":65.2099990845,"Low":62.0800018311,"Close":65.2099990845,"Volume":155900})
         '''    
+'''
+class Test05_GraphExists(unittest.TestCase):
+    def test_list_int(self):
+        print('')
+'''
 if __name__ == '__main__':
     with open('test.txt', "w") as f:
         runner = unittest.TextTestRunner(f)

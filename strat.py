@@ -1,6 +1,7 @@
 #module contains both Bollinger Band Bounce and Moving Average Crossover
 from yf_api import *
 
+
 def BandBounce(file, window=20):
     #pull 'close' data
     file = file['Close']
@@ -24,6 +25,12 @@ def BandBounce(file, window=20):
         else:                   #do nothing (0)
             callist.append(0)
 
+    #call backtesting module
+    #print(callist)
+
+
+
+BandBounce(choose_date())
 
 # use 20 days as data points
 def MovAvg(ticker):
@@ -46,8 +53,7 @@ def MovAvg(ticker):
         else:
             break
     i = 0
-
-       
+ 
     # should iterate starting from 0, and summate 20 indices and calculate avg 
     while(i < len(ticker['Close'])):
         if (counter < 20):
