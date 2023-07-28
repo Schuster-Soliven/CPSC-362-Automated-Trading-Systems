@@ -2,28 +2,19 @@ from yf_api import *
 from displayGraph import plot_data
 import datetime
 
-# Introduction Prompt
 print('Welcome to HARE (Highly Advanced Rapid Exchange).')
 print('As the user, you are hypothetically given $100,000 to use on the stock market.')
 
-# Start of loop
-# ETF choice
 print('Which ETF would you like to examine?')
 
-user_input = 'NULL'
-while (user_input != 'U' and user_input != 'D') :
-    etf = input('FNGD (D) or FNGU (U)?')
-    user_input = etf.upper()
+etf_map = {'D': 'FNGD', 'U': 'FNGU'}
+
+user_input = None
+while user_input not in etf_map:
+    user_input = input('FNGD (D) or FNGU (U)?')
+etf = etf_map[user_input]
 
 print('We will download targeted data from Yahoo Finance starting from 2020 January 1')
-
-# # Download data!
-# if (user_input == 'D'):
-#     df = choose_date('FNGD')
-# else:
-#     df = choose_date()
-
-# print('Download successful.')
 
 # Download data!
 if (user_input == 'D'):
@@ -32,6 +23,12 @@ else:
     df = choose_date('FNGU', '01012020')
 
 print('Download successful.')
+
+# Ask user for start date
+# user_input = None
+# while (not isinstance(user_input, int) or user_input <= 1012020):
+#     user_input = int(input('Please enter a start date (MMDDYYYY) of which will contain ETF information until the end date of (yesterday). Note that the maximum range is 01012020: '))
+# print(f'Date is within expected range. Data will now range from {user_input} to yesterday\'s date.')
 
 # Convert 'Date' column to datetime objects
 df['Date'] = pd.to_datetime(df['Date'])
@@ -56,24 +53,15 @@ df = df[df['Date'] >= start_date]
 # Display graph
 plot_data(df, user_input)
 
-
-# User prompt to choose strategy
-while True:
-    print('Which type of strategy would you like to use?')
-    user_input = input('Bollinger-Band-Bounce (B)\nMoving-Average (M)\nTrust the system (T)\n')
-    user_input = user_input.upper()
-    if user_input in ['B', 'M', 'T']:
-        break
-    else:
-        print("Invalid input. Please choose one of the provided options.")
+# Ask user for strategy
+strategy_map = {'B': 'Bollinger-Band-Bounce', 'M': 'Moving-Average', 'T': 'Trust the system'}
+user_input = None
+while user_input not in strategy_map:
+    user_input = input('Which type of strategy would the user like to use? Bollinger-Band-Bounce (B)\nMoving-Average (M)\nTrust the system (T)\n')
+strategy = strategy_map[user_input]
 
 print('Strategy chosen, returns are being calculated.')
 
+# Here, you would add your logic for backtesting and calculating returns...
 
-# backtest
-# returns are calculated
-# user another strategy?
-# try program again?
-
-# End Program
-print('Program will be terminated. Thank you for using HARE.')
+print('Program will be terminated, we thank you for using HARE.')

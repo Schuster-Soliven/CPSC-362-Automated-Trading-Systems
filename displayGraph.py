@@ -17,7 +17,7 @@ def plot_data(df, ticker):
     df['Date'] = pd.to_datetime(df['Date'])
 
     plt.figure(figsize=(12, 6))
-    plt.plot(df['Date'], df['Close'], label='Close Price', color='blue')
+    plt.plot(df['Date'], df['Close'], label='Close Price', color='red')
     plt.xlabel('Date')
     plt.ylabel('Closing Price')
 
@@ -32,7 +32,7 @@ def plot_data(df, ticker):
     # Set the x-axis tick locator and formatter
     ax = plt.gca()
     ax.xaxis.set_major_locator(mdates.AutoDateLocator())
-    ax.xaxis.set_major_formatter(mdates.DateFormatter('%d-%m-%Y'))
+    ax.xaxis.set_major_formatter(mdates.DateFormatter('%m-%d-%Y'))
     plt.xticks(rotation=45)
 
     plt.tight_layout()
