@@ -89,14 +89,24 @@ def MovAvg(etf_data=choose_date(), window=20):
       do nothing
     call backtest
     '''
+    i = 0
+    bs_list = [0]
+    while (i < len(average_list) - 1):
+        if(etf_data['Close'][i] < etf_data['Close'][i+1] and etf_data['Close'][i+1] < average_list[i+1]):
+            bs_list.append(1)
+            i+=1
+        elif(etf_data['Close'][i] > etf_data['Close'][i+1] and etf_data['Close'][i+1] > average_list[i+1]):
+            bs_list.append(-1)
+            i+=1
+        else:
+            bs_list.append(0)
+            i+=1
     # later returns buy/sell list
-    return average_list
+    return bs_list
 
 # testing
 #print(BandBounce(choose_date('FNGD', '05012022')))
-
-
-
+'''
 t = choose_date('FNGD', '05012023')
 avg_list = MovAvg(t)
 c_list = t['Close']
@@ -104,7 +114,7 @@ counter = 0
 
 print(avg_list)
 print(c_list)
-
+'''
 '''
 print('Close Dates')
 while(counter < len(c_list['Close'])):
