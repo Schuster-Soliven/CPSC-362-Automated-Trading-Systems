@@ -1,5 +1,5 @@
 #module contains both Bollinger Band Bounce and Moving Average Crossover
-from yf_api import *
+from yf_api import choose_date
 
 
 def BandBounce(file, window=20):
@@ -29,19 +29,10 @@ def BandBounce(file, window=20):
     return callist
 
 # use 20 days as data points
-def MovAvg(etf_data):
-    # iter over dictionary taking close data
-    # check previous data point and next data point. If next data point is under or below the average, buy or sell
-    
-    #should print all close indices
-    '''
-    count = 0
-    for x in ticker['Close']:
-        count += 1
-    print(count)
-    '''
-    # rge is range of indices
-    rge = 20
+def MovAvg(etf_data=choose_date(), window=20):
+    '''Take an average of a period of days and calculate whether the average line is crossed by the market close price'''
+    # window is range of indices
+    window = window
     # i is index
     i = 0
     # iD is distance from index
@@ -53,7 +44,7 @@ def MovAvg(etf_data):
     # holds the list to compare to close dictionary
     average_list = []
     # first 20 close values append into average_list
-    while(i < 20):
+    while(i < window):
         average_list.append(etf_data['Close'][i])
         i += 1
     # reset index
@@ -68,14 +59,14 @@ def MovAvg(etf_data):
         if (i + iD == len(etf_data['Close'])):
             # end average list
             break
-        elif (iD < rge):
+        elif (iD < window):
             # sum of 20 
             sum += etf_data['Close'][i+iD]
             iD += 1
-        elif (iD == rge):
+        elif (iD == window):
             # average it
             #reset sum and iD and increment i by 1
-            average = sum/rge
+            average = sum/window
             average_list.append(average)
             average = 0
             sum = 0
@@ -98,30 +89,25 @@ def MovAvg(etf_data):
       do nothing
     call backtest
     '''
-    for x in average_list:
-        print(x)
+    # later returns buy/sell list
     return average_list
 
 # testing
-print(BandBounce(choose_date('FNGD', '05012023')))
+#print(BandBounce(choose_date('FNGD', '05012022')))
 
-'''
-avg_list = MovAvg(choose_date('FNGD', '05012023'))
-c_list = choose_date('FNGD', '05012023')
 
-print(len(avg_list))
-print(len(c_list['Close']))
 
+t = choose_date('FNGD', '05012023')
+avg_list = MovAvg(t)
+c_list = t['Close']
 counter = 0
 
+print(avg_list)
+print(c_list)
+
+'''
 print('Close Dates')
 while(counter < len(c_list['Close'])):
-    print(c_list['Close'][counter]) 
+    print(str(c_list['Close'][counter]) + ' : ' + str(avg_list[counter])) 
     counter += 1
-    
-print('Average List')
-for x in avg_list:
-    print(x)
-    #counter += 1
-#print(counter)
 '''
