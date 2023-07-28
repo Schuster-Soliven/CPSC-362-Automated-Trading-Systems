@@ -31,12 +31,13 @@ def choose_date(ticker='FNGU', start_date='01012020'):
 
     return df
 
+# might not need
 def create_file(ticker='FNGU', start_date='01012020'):
-    print('Creating file')
     file1 = open(ticker+'.json', 'w')
     # why do I need to put to json again
     df = choose_date(ticker, start_date)
+    print('Creating file')
     file1.write(df.to_json())
     file1.close()
 
-create_file('FNGD', '05012023') 
+#create_file('FNGD', '05012023') 
