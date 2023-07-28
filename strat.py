@@ -105,17 +105,16 @@ def MovAvg(etf_data=choose_date(), window=20):
     return bs_list
 
 # testing
-
+#print(BandBounce(choose_date('FNGD', '05012022')))
 '''
-t = choose_date('FNGD', '05012022')
-print(BandBounce(t))
-
-bs_list = MovAvg(t)
+t = choose_date('FNGD', '05012023')
+avg_list = MovAvg(t)
 c_list = t['Close']
 counter = 0
 
-print(bs_list)'''
-
+print(avg_list)
+print(c_list)
+'''
 '''
 print('Close Dates')
 while(counter < len(c_list['Close'])):
