@@ -2,14 +2,19 @@ import time
 import pandas as pd
 from datetime import datetime, timedelta
 
+def get_yesterday():
+    yesterday = datetime.now() - timedelta(days=1)
+    yesterday_str = yesterday.strftime("%m%d%Y")
+    return yesterday_str
+
 def choose_date(ticker='FNGU', start_date='01012020'):
     print('Grabbing data') 
     month = int(start_date[0:2])
     day = int(start_date[2:4])
     year = int(start_date[4:8])
 
-    yesterday = datetime.now() - timedelta(days=1)
-    yesterday_str = yesterday.strftime("%m%d%Y")
+   
+    yesterday_str = get_yesterday()
 
     ymonth = int(yesterday_str[0:2])
     yday = int(yesterday_str[2:4])
@@ -31,13 +36,3 @@ def choose_date(ticker='FNGU', start_date='01012020'):
 
     return df
 
-# might not need
-def create_file(ticker='FNGU', start_date='01012020'):
-    file1 = open(ticker+'.json', 'w')
-    # why do I need to put to json again
-    df = choose_date(ticker, start_date)
-    print('Creating file')
-    file1.write(df.to_json())
-    file1.close()
-
-#create_file('FNGD', '05012023') 
