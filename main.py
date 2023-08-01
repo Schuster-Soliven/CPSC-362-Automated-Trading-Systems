@@ -43,9 +43,9 @@ user_input = None
 while user_input not in strategy_map:
     user_input = input('Which type of strategy would the user like to use? Bollinger-Band-Bounce (B)\nMoving-Average (M)\nTrust the system (T)\n')
 if user_input == 'B' or user_input == 'Bollinger-Band-Bounce':
-    print(BandBounce(y))
+    print(give_date(y, BandBounce(y)))
 elif user_input == 'M' or user_input == 'Moving-Average':
-    print(MovAvg(y))
+    print(give_date(y, MovAvg(y)))
 else:
     print('Trust the System WIP')
 
