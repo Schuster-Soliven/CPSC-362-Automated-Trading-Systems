@@ -101,3 +101,16 @@ def MovAvg(etf_data=choose_date()):
             bs_list.append(0)
             i+=1
     return bs_list
+
+def give_date(etf_data=choose_date(), e_list=''):
+    c_data = etf_data['Close']
+    d_data = etf_data['Date']
+    new_list = {}
+    i = 0
+    while i < len(c_data):
+        new_list[d_data[i]] = [c_data[i], e_list[i]]
+        i += 1
+    return new_list
+    
+x = choose_date('FNGD', '07202023')
+print(give_date(x, BandBounce(x)))
