@@ -1,14 +1,31 @@
-#module contains both Bollinger Band Bounce and Moving Average Crossover
+'''
+This file: strat.py
+Description: Module contains both Bollinger Band Bounce and Moving Average Crossover strategies
+'''
 from yf_api import choose_date
 
+def check_window(etf_data):
+    '''Check if the window will fit b/w user chosen date period'''
+    etf_data = etf_data['Close']
+    if len(etf_data) < 20:
+        return 10
+    elif len(etf_data) < 10:
+        return 3
+    else:
+        return 1
+    
 
 def BandBounce(file, window=20):
-    #pull 'close' data
+    '''
+    Sends Buy/Sell/Null signals based on whether close market fall out of the standard deviation of the average market price based on a window of days
+    '''
+    # pull 'close' data
     file = file['Close']
 
-    #calculate middle, upper, and lower bands
-    #ASSUMING THAT    window = 20    band (std dev) = 2
-    #when upper & lower bands squeeze together, good sign to buy/sell cuz will usually expand after
+    # Calculate middle, upper, and lower bands
+    # Assumes band (std dev) = 2
+    # When upper & lower bands squeeze together, good sign to buy/sell cuz will usually expand after
+    window = window
     mean = file.rolling(window).mean()
     stdDev = file.rolling(window).std()
     uBand = mean + 2 * stdDev
@@ -28,9 +45,8 @@ def BandBounce(file, window=20):
     #call backtesting module
     return callist
 
-# use 20 days as data points
 def MovAvg(etf_data=choose_date(), window=20):
-    '''Take an average of a period of days and calculate whether the average line is crossed by the market close price'''
+    '''Take an average of a window of days and calculate whether the average line is crossed by the market close price'''
     # window is range of indices
     window = window
     # i is index
@@ -44,28 +60,22 @@ def MovAvg(etf_data=choose_date(), window=20):
     # holds the list to compare to close dictionary
     average_list = []
     # first 20 close values append into average_list
+    close_data = etf_data['Close']
     while(i < window):
-        average_list.append(etf_data['Close'][i])
+        average_list.append(close_data[i])
         i += 1
     # reset index
     i = 0
-
-    # should iterate starting from 0, and summate 20 indices and calculate avg 
-    # logic check needed: if 20 values are in avg list, and after x is averaged after 20 indices, and that average is appended to the end
-    # of the average_list, the first value of average corresponds with 0. The average of etf_data indices 0 to 19 will correspond to average_list[0]. 
-    # Thus len(etf_data['Close']) - 20 to len(etf_data['Close']) will correspond to average_list[len(average_list)-1]
-    # This would mean that etf_data['Close'] are of equal length to average_list
-    while(i < len(etf_data['Close'])):
-        if (i + iD == len(etf_data['Close'])):
+    # Average sum of window 
+    while(i < len(close_data)):
+        if (i + iD == len(close_data)):
             # end average list
             break
         elif (iD < window):
             # sum of 20 
-            sum += etf_data['Close'][i+iD]
+            sum += close_data[i+iD]
             iD += 1
         elif (iD == window):
-            # average it
-            #reset sum and iD and increment i by 1
             average = sum/window
             average_list.append(average)
             average = 0
@@ -75,49 +85,17 @@ def MovAvg(etf_data=choose_date(), window=20):
         else:
             print('do nothing')
 
-    
-    #now iterate through ticker list of close and compare average_list to choose when to buy or sell or nothing
-    '''
-    b = previous point in etf_data
-    x = next point in etf_data
-    a = x point in average_list
-    if b < x < a:
-      sell
-    if b > x > a:
-      buy
-    else:
-      do nothing
-    call backtest
-    '''
+    # Checks if data points crosses average line. Returns list
     i = 0
     bs_list = [0]
     while (i < len(average_list) - 1):
-        if(etf_data['Close'][i] < etf_data['Close'][i+1] and etf_data['Close'][i+1] < average_list[i+1]):
+        if(close_data[i] < close_data[i+1] and close_data[i+1] < average_list[i+1]):
             bs_list.append(1)
             i+=1
-        elif(etf_data['Close'][i] > etf_data['Close'][i+1] and etf_data['Close'][i+1] > average_list[i+1]):
+        elif(close_data[i] > close_data[i+1] and close_data[i+1] > average_list[i+1]):
             bs_list.append(-1)
             i+=1
         else:
             bs_list.append(0)
             i+=1
-    # later returns buy/sell list
     return bs_list
-
-# testing
-#print(BandBounce(choose_date('FNGD', '05012022')))
-'''
-t = choose_date('FNGD', '05012023')
-avg_list = MovAvg(t)
-c_list = t['Close']
-counter = 0
-
-print(avg_list)
-print(c_list)
-'''
-'''
-print('Close Dates')
-while(counter < len(c_list['Close'])):
-    print(str(c_list['Close'][counter]) + ' : ' + str(avg_list[counter])) 
-    counter += 1
-'''
