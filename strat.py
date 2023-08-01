@@ -6,16 +6,18 @@ from yf_api import choose_date
 
 def check_window(etf_data):
     '''Check if the window will fit b/w user chosen date period'''
-    etf_data = etf_data['Close']
-    if len(etf_data) < 20:
+    etf_data = etf_data
+    if len(etf_data) <= 20:
         return 10
+    elif len(etf_data) > 20:
+        return 20
     elif len(etf_data) < 10:
         return 3
     else:
         return 1
     
 
-def BandBounce(file, window=20):
+def BandBounce(file):
     '''
     Sends Buy/Sell/Null signals based on whether close market fall out of the standard deviation of the average market price based on a window of days
     '''
@@ -25,7 +27,7 @@ def BandBounce(file, window=20):
     # Calculate middle, upper, and lower bands
     # Assumes band (std dev) = 2
     # When upper & lower bands squeeze together, good sign to buy/sell cuz will usually expand after
-    window = window
+    window = check_window(file)
     mean = file.rolling(window).mean()
     stdDev = file.rolling(window).std()
     uBand = mean + 2 * stdDev
@@ -45,10 +47,10 @@ def BandBounce(file, window=20):
     #call backtesting module
     return callist
 
-def MovAvg(etf_data=choose_date(), window=20):
+def MovAvg(etf_data=choose_date()):
     '''Take an average of a window of days and calculate whether the average line is crossed by the market close price'''
     # window is range of indices
-    window = window
+    window = check_window(etf_data)
     # i is index
     i = 0
     # iD is distance from index
