@@ -13,6 +13,11 @@ def get_yesterday():
     return yesterday_str
 
 def choose_date(ticker='FNGU', start_date='01012020'):
+    if int(start_date[0:2]) > 12 or int(start_date[2:4]) > 31 or int(start_date[4:8]) < 2020:
+        return('Invalid date')
+    if ticker != 'FNGU' or ticker != 'FNGD':
+        return('Invalid ticker')
+
     print('Grabbing data')
     month = int(start_date[0:2])
     day = int(start_date[2:4])
