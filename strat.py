@@ -1,10 +1,15 @@
-#module contains both Bollinger Band Bounce and Moving Average Crossover
+'''
+This file: strat.py
+Description: Module contains both Bollinger Band Bounce and Moving Average Crossover strategies
+'''
 from yf_api import choose_date
 
 def check_window(etf_data):
-    if len(etf_data['Close']) < 20:
+    '''Check if the window will fit b/w user chosen date period'''
+    etf_data = etf_data['Close']
+    if len(etf_data) < 20:
         return 10
-    elif len(etf_data['Close']) < 10:
+    elif len(etf_data) < 10:
         return 3
     else:
         return 1
@@ -12,7 +17,7 @@ def check_window(etf_data):
 
 def BandBounce(file, window=20):
     '''
-    Sends Buy/Sell/Null Signals based on whether close market fall out of the standard deviation of the average market price based on a window of days
+    Sends Buy/Sell/Null signals based on whether close market fall out of the standard deviation of the average market price based on a window of days
     '''
     # pull 'close' data
     file = file['Close']
