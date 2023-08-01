@@ -111,6 +111,3 @@ def give_date(etf_data=choose_date(), e_list=''):
         new_list[d_data[i]] = [c_data[i], e_list[i]]
         i += 1
     return new_list
-    
-x = choose_date('FNGD', '07202023')
-print(give_date(x, BandBounce(x)))
