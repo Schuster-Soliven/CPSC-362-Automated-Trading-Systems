@@ -4,7 +4,7 @@ from datetime import datetime
 from yf_api import choose_date
 from strat import *
 
-class TestyfAPI(unittest.TestCase):
+class Test01_Integration(unittest.TestCase):
     def test_list_int(self):
         ticker = 'FNGU'
         start_date = '01012020'
@@ -12,7 +12,7 @@ class TestyfAPI(unittest.TestCase):
         x = MovAvg(y)
         self.assertEqual(len(x), len(y['Close']))
 
-class TestIntegration(unittest.TestCase):
+class Test02_UnitCase(unittest.TestCase):
     def test_list_int(self):
         ticker = 'FNGU'
         start_date = '01011010'
