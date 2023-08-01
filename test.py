@@ -1,33 +1,26 @@
-'''
-This file: test.py
-Description: test methods and functions
-'''
 import unittest
-import io
-import sys
-from unittest.mock import patch
-import json
+import pandas as pd
+from datetime import datetime
+from yf_api import choose_date
+from strat import *
 
-from yf_api import *
-
-dataFile = 'FNGD.json'
-
-import os
-def remove_file(filename):
-    if os.path.exists(filename):
-        os.remove(filename)
-
-# Fix me to work with yf_api
-class Test01_FileContentsIsList(unittest.TestCase):
+class TestyfAPI(unittest.TestCase):
     def test_list_int(self):
-        """
-        *** Test01 *** JSON file with ETF data exists for FNGD***
-        """
-        #self.assertEqual(list, type(data))
-        remove_file(dataFile)
+        ticker = 'FNGU'
+        start_date = '01012020'
+        y = choose_date(ticker, start_date)
+        x = MovAvg(y)
+        self.assertEqual(len(x), len(y['Close']))
 
+class TestIntegration(unittest.TestCase):
+    def test_list_int(self):
+        ticker = 'FNGU'
+        start_date = '01011010'
+        df = choose_date(ticker, start_date)
+        self.assertEqual(df, ('Invalid date'))
+        print()
+        
 if __name__ == '__main__':
     with open('test.txt', "w") as f:
         runner = unittest.TextTestRunner(f)
         unittest.main(testRunner=runner)
-        

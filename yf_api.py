@@ -15,7 +15,7 @@ def get_yesterday():
 def choose_date(ticker='FNGU', start_date='01012020'):
     if int(start_date[0:2]) > 12 or int(start_date[2:4]) > 31 or int(start_date[4:8]) < 2020:
         return('Invalid date')
-    if ticker != 'FNGU' or ticker != 'FNGD':
+    if ticker != 'FNGU' and ticker != 'FNGD':
         return('Invalid ticker')
 
     print('Grabbing data')
@@ -44,4 +44,3 @@ def choose_date(ticker='FNGU', start_date='01012020'):
     df.to_json(f"{ticker}.json", orient="records", date_format="iso")
 
     return df
-
