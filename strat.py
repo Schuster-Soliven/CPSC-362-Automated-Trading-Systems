@@ -103,6 +103,7 @@ def MovAvg(etf_data=choose_date()):
     return bs_list
 
 def give_date(etf_data=choose_date(), e_list=''):
+    '''affixes buy/sell signals a date and price in a dictionary'''
     c_data = etf_data['Close']
     d_data = etf_data['Date']
     new_list = {}
