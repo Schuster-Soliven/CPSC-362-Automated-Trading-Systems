@@ -8,9 +8,9 @@ def check_window(etf_data):
     '''Check if the window will fit b/w user chosen date period'''
     etf_data = etf_data
     if len(etf_data) <= 20:
-        return 10
+        return 5
     elif len(etf_data) > 20:
-        return 20
+        return 8
     elif len(etf_data) < 10:
         return 3
     else:
@@ -37,9 +37,9 @@ def BandBounce(file):
     callist = []
     for n in range(len(file)):
         #print(file[n])
-        if file[n] > uBand[n]:     #buy (-1)
+        if file[n] > uBand[n]:     # sell (-1)
             callist.append(-1)
-        elif file[n] < lBand[n]:   #sell (1)
+        elif file[n] < lBand[n]:   # buy (1)
             callist.append(1)
         else:                   #do nothing (0)
             callist.append(0)
@@ -92,13 +92,13 @@ def MovAvg(etf_data=choose_date()):
     bs_list = [0]
     while (i < len(average_list) - 1):
         if(close_data[i] < close_data[i+1] and close_data[i+1] < average_list[i+1]):
-            bs_list.append(1)
+            bs_list.append(-1) # buy
             i+=1
         elif(close_data[i] > close_data[i+1] and close_data[i+1] > average_list[i+1]):
-            bs_list.append(-1)
+            bs_list.append(1) # sell
             i+=1
         else:
-            bs_list.append(0)
+            bs_list.append(0) # do nothing
             i+=1
     return bs_list
 
