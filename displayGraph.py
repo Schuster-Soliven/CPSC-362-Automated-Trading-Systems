@@ -7,7 +7,8 @@ class DisplayGraph:
         self.df = df
         # Convert 'Date' column to datetime objects and filter by start_date
         self.df['Date'] = pd.to_datetime(df['Date'])
-        self.df = self.df[self.df['Date'] >= start_date]
+        self.df = self.df[self.df['Date'] >= pd.to_datetime(start_date, format="%m%d%Y")]
+
 
     def plot_data(self):
         # Create a new figure with specific size
