@@ -8,11 +8,17 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 def get_yesterday():
+    '''
+    Returns yesterday's date
+    '''
     yesterday = datetime.now() - timedelta(days=1)
     yesterday_str = yesterday.strftime("%m%d%Y")
     return yesterday_str
 
 def choose_date(ticker='FNGU', start_date='01012020'):
+    '''
+    Downloads yahoo finance data given a etf and a starting period after, but including January 1, 2020
+    '''
     if int(start_date[0:2]) > 12 or int(start_date[2:4]) > 31 or int(start_date[4:8]) < 2020:
         return('Invalid date')
     if ticker != 'FNGU' and ticker != 'FNGD':
