@@ -3,7 +3,6 @@ This file: yf_api.py
 Description: choose_date returns downloaded data from yahoo finance and get_yesterday gets yesterday's date
 '''
 import time
-from yf_api import *
 import pandas as pd
 from datetime import datetime, timedelta
 
@@ -15,7 +14,22 @@ def get_yesterday():
     yesterday_str = yesterday.strftime("%m%d%Y")
     return yesterday_str
 
+def guard(func):
+    def wrapper(*args):
+        d = args[1]
+        t = args[0]
+        if int(d[0:2]) > 12 or int(d[2:4]) > 31 or int(d[4:8]) < 2020:
+            print('Invalid date, downloading FNGU from Jan 1, 2020')
+            return func('FNGU', '01012020')
+        if t != 'FNGU' and t != 'FNGD':
+            print('Invalid ticker, downloading FNGU from Jan 1, 2020')
+            return func('FNGU', '01012020')
+        else:
+            return func(*args)
+    return wrapper
+
 class yf_api:
+    @guard
     def choose_date(ticker='FNGU', start_date='01012020'):
         '''
         Downloads yahoo finance data given a etf and a starting period after, but including January 1, 2020
@@ -25,7 +39,6 @@ class yf_api:
         if ticker != 'FNGU' and ticker != 'FNGD':
             return('Invalid ticker')
 
-        print('Grabbing data')
         month = int(start_date[0:2])
         day = int(start_date[2:4])
         year = int(start_date[4:8])

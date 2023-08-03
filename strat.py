@@ -4,10 +4,8 @@ Description: Module contains both Bollinger Band Bounce and Moving Average Cross
 '''
 from yf_api import *
 from allStrategies import *
-
-
     
-def give_date(etf_data=yf_api.choose_date(), e_list=''):
+def give_date(etf_data=yf_api.choose_date('FNGU', '01012020'), e_list=''):
     '''affixes buy/sell signals a date and price in a dictionary'''
     c_data = etf_data['Close']
     d_data = etf_data['Date']
@@ -18,7 +16,7 @@ def give_date(etf_data=yf_api.choose_date(), e_list=''):
         i += 1
     return new_list
 
-def check_window(etf_data):
+def check_window(etf_data=yf_api.choose_date('FNGU', '01012020')):
     '''Check if the window will fit b/w user chosen date period'''
     etf_data = etf_data
     if len(etf_data) <= 20:
@@ -31,7 +29,7 @@ def check_window(etf_data):
         return 1
 
 class strat(AllStrategies):
-    def BandBounce(file=yf_api.choose_date()):
+    def BandBounce(file=yf_api.choose_date('FNGU', '01012020')):
         '''
         Sends Buy/Sell/Null signals based on whether close market fall out of the standard deviation of the average market price based on a window of days
         '''
@@ -61,7 +59,7 @@ class strat(AllStrategies):
         #call backtesting module
         return callist
 
-    def MovAvg(etf_data=yf_api.choose_date()):
+    def MovAvg(etf_data=yf_api.choose_date('FNGU', '01012020')):
         '''Take an average of a window of days and calculate whether the average line is crossed by the market close price'''
         # window is range of indices
         window = check_window(etf_data)
