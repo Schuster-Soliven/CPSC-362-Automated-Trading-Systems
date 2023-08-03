@@ -1,4 +1,4 @@
-from strat import MovAvg, BandBounce
+from strat import strat
 
 class Backtesting:
     def __init__(self, strategy, etf_data, look_ahead=5):
@@ -12,9 +12,9 @@ class Backtesting:
     def backtest(self):
         # Determine the strategy's signals
         if self.strategy == 'BandBounce':
-            signals = BandBounce(self.etf_data)
+            signals = strat.BandBounce(self.etf_data)
         elif self.strategy == 'MovAvg':
-            signals = MovAvg(self.etf_data)
+            signals = strat.MovAvg(self.etf_data)
         else:
             raise ValueError("Invalid strategy")  # Throw an error if an unsupported strategy is passed
 
