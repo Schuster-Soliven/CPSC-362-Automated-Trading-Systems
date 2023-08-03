@@ -30,7 +30,7 @@ user_input = '00000000'
 while (int(user_input[0:2]) > 12 or int(user_input[2:4]) > 31 or int(user_input[4:8]) < 2020):
     user_input = input('Please enter a start date (MMDDYYYY) of which will contain ETF information until the end date of (yesterday). Note that the maximum range is 01012020: ')
 start_date = user_input
-y = choose_date(etf, start_date)
+y = yf_api.choose_date(etf, start_date)
 print(f'Date is within expected range. Data will now range from {start_date} to yesterday\'s date.')
 
 # add graph here

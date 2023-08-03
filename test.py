@@ -9,14 +9,14 @@ class Test01_Integration(unittest.TestCase):
         ticker = 'FNGU'
         start_date = '01012020'
         y = choose_date(ticker, start_date)
-        x = MovAvg(y)
+        x = strat.MovAvg(y)
         self.assertEqual(len(x), len(y['Close']))
 
 class Test02_UnitCase(unittest.TestCase):
     def test_list_int(self):
         ticker = 'FNGU'
         start_date = '01011010'
-        df = choose_date(ticker, start_date)
+        df = yf_api.choose_date(ticker, start_date)
         self.assertEqual(df, ('Invalid date'))
         print()
         
