@@ -2,12 +2,12 @@
 This file: strat.py
 Description: Module contains both Bollinger Band Bounce and Moving Average Crossover strategies
 '''
-from yf_api import choose_date
+from yf_api import *
 from allStrategies import *
 
 
     
-def give_date(etf_data=choose_date(), e_list=''):
+def give_date(etf_data=yf_api.choose_date('FNGU', '01012020'), e_list=''):
     '''affixes buy/sell signals a date and price in a dictionary'''
     c_data = etf_data['Close']
     d_data = etf_data['Date']
@@ -61,7 +61,7 @@ class strat(AllStrategies):
         #call backtesting module
         return callist
 
-    def MovAvg(etf_data=choose_date()):
+    def MovAvg(etf_data=yf_api.choose_date('FNGU', '01012020')):
         '''Take an average of a window of days and calculate whether the average line is crossed by the market close price'''
         # window is range of indices
         window = check_window(etf_data)
