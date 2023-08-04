@@ -1,6 +1,7 @@
+from A_Backtesting import *
 from strat import *
 
-class Backtesting:
+class Backtesting(A_Backtesting):
     def __init__(self, strategy, etf_data, look_ahead=5):
         self.strategy = strategy  # Selected trading strategy
         self.etf_data = etf_data  # Historical ETF data

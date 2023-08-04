@@ -1,8 +1,9 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
+from A_display_graph import *
 
-class DisplayGraph:
+class DisplayGraph(A_display_graph):
     def __init__(self, df, start_date):
         self.df = df
         # Convert 'Date' column to datetime objects and filter by start_date

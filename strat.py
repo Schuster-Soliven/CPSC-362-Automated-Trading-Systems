@@ -6,7 +6,9 @@ from yf_api import *
 from allStrategies import *
     
 def give_date(etf_data=yf_api.choose_date('FNGU', '01012020'), e_list=''):
-    '''affixes buy/sell signals a date and price in a dictionary'''
+    '''
+    Affixes buy/sell signals a date and price in a dictionary
+    '''
     c_data = etf_data['Close']
     d_data = etf_data['Date']
     new_list = {}
@@ -17,7 +19,9 @@ def give_date(etf_data=yf_api.choose_date('FNGU', '01012020'), e_list=''):
     return new_list
 
 def check_window(etf_data=yf_api.choose_date('FNGU', '01012020')):
-    '''Check if the window will fit b/w user chosen date period'''
+    '''
+    Check if the window will fit b/w user chosen date period
+    '''
     etf_data = etf_data
     if len(etf_data) <= 20:
         return 5

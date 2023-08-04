@@ -1,11 +1,12 @@
-import unittest
-import pandas as pd
-from datetime import datetime
 from yf_api import *
 from strat import *
 from exampleSubclass import *
 from allStrategies import *
 from context import *
+
+import unittest
+import pandas as pd
+from datetime import datetime
 
 class Test01_Integration(unittest.TestCase):
     def test_list_int(self):

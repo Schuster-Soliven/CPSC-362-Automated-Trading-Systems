@@ -5,6 +5,7 @@ Description: choose_date returns downloaded data from yahoo finance and get_yest
 import time
 import pandas as pd
 from datetime import datetime, timedelta
+from A_yf_api import *
 
 def get_yesterday():
     '''
@@ -28,7 +29,7 @@ def guard(func):
             return func(*args)
     return wrapper
 
-class yf_api:
+class yf_api(A_yf_api):
     @guard
     def choose_date(ticker='FNGU', start_date='01012020'):
         '''

@@ -6,7 +6,7 @@ from yf_api import *
 from strat import *
 from displayGraph import *
 from backtesting import *
-from graph_api_adapter import TickerGraphDisplayer
+from graph_api_adapter import *
 import os
 
 def remove_file(filename):
@@ -74,7 +74,6 @@ while(key == 'Y'):
 
         print("Total Return in Dollars:  $", total_return_dollars)
         print("Total Return in Percentage:", total_return_percentage, "%")
-        graph_displayer.display_graph_for_ticker(etf)
         prompt = input('Would you like to try using a different strategy? Y/N ')
         user_input = ''
 
