@@ -31,9 +31,32 @@ def check_window(etf_data=yf_api.choose_date('FNGU', '01012020')):
         return 3
     else:
         return 1
+    
+def bound_to_list(etf_data, lst):
+    index = 0
+    while (index < 20):
+        if (lst[index] == 'nan'):
+            lst[index] = etf_data[index]
+        else:
+            break
+    return lst
 
 class strat(AllStrategies):
-    def BandBounce(file=yf_api.choose_date('FNGU', '01012020')):
+    def __init__(self):
+        self._uBand = []
+        self._lBand = []
+        self._avg = []
+
+    def getuBands(self):
+        return self._uBand
+    
+    def getlBands(self):
+        return self._lBand
+    
+    def getAvg(self):
+        return self._avg
+    
+    def BandBounce(self, file=yf_api.choose_date('FNGU', '01012020')):
         '''
         Sends Buy/Sell/Null signals based on whether close market fall out of the standard deviation of the average market price based on a window of days
         '''
@@ -46,8 +69,12 @@ class strat(AllStrategies):
         window = check_window(file)
         mean = file.rolling(window).mean()
         stdDev = file.rolling(window).std()
-        uBand = mean + 2 * stdDev
-        lBand = mean - 2 * stdDev
+        uBand = mean + (2 * stdDev)
+        lBand = mean - (2 * stdDev)
+
+        self._uBand = bound_to_list(file, uBand) 
+        self._lBand = bound_to_list(file, lBand)
+
 
         #create list of calls to buy / sell / do nothing
         callist = []
@@ -63,7 +90,7 @@ class strat(AllStrategies):
         #call backtesting module
         return callist
 
-    def MovAvg(etf_data=yf_api.choose_date('FNGU', '01012020')):
+    def MovAvg(self, etf_data=yf_api.choose_date('FNGU', '01012020')):
         '''Take an average of a window of days and calculate whether the average line is crossed by the market close price'''
         # window is range of indices
         window = check_window(etf_data)
@@ -102,6 +129,7 @@ class strat(AllStrategies):
                 i += 1
             else:
                 print('do nothing')
+        self._avg = average_list
         # Checks if data points crosses average line. Returns list
         i = 0
         bs_list = [0]

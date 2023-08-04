@@ -39,7 +39,7 @@ while(key == 'Y'):
 
     # add graph here
     print(f'Displaying a graph and tabulated data ranging from {start_date} to {get_yesterday()}')
-    graph_displayer.display_graph_for_ticker(etf)
+    graph_displayer.display_graph_for_ticker(y)
 
     # Ask user for strategy
     strategy_map = {'B': 'Bollinger-Band-Bounce', 'M': 'Moving-Average'}
@@ -47,29 +47,34 @@ while(key == 'Y'):
     prompt = 'Y'
     total_return_dollars = ''
     total_return_percentage = ''
-    ll = strat
+    ll = strat()
     while(prompt == 'Y'):
         while user_input not in strategy_map:
             user_input = input('Which type of strategy would the user like to use? Bollinger-Band-Bounce (B)\nMoving-Average (M)\n')
-        etf_data = y_instance.choose_date(etf, start_date)
         if user_input == 'B' or user_input == 'Bollinger-Band-Bounce':
+            bb = ll.BandBounce(y)
             d = give_date(y, ll.BandBounce(y))
+            bb_graph = TickerGraphDisplayer(ll, start_date)
+            bb_graph.display_band_bounce(y)
             for x in d.items():
                 print(x)
                 # Initialize and backtest the BandBounce strategy
-            band_bounce_backtesting = Backtesting('BandBounce', etf_data)
-            total_return_dollars, total_return_percentage = band_bounce_backtesting.backtest()
+            band_bounce_backtesting = Backtesting('BandBounce')
+            total_return_dollars, total_return_percentage = band_bounce_backtesting.backtest(y, bb)
             print('Strategy chosen, returns are being calculated.')
-            print("BandBounce Strategy Results:")
+            print("BandBounce Strategy Results: ")
         elif user_input == 'M' or user_input == 'Moving-Average':
+            ma = ll.MovAvg(y)
             d = give_date(y, ll.MovAvg(y))
+            ma_graph = TickerGraphDisplayer(ll, start_date)
+            ma_graph.display_moving_average(y)
             for x in d.items():
                 print(x)
                     # Initialize and backtest the MovAvg strategy
-            mov_avg_backtesting = Backtesting('MovAvg', etf_data)
-            total_return_dollars, total_return_percentage = mov_avg_backtesting.backtest()
+            mov_avg_backtesting = Backtesting('MovAvg')
+            total_return_dollars, total_return_percentage = mov_avg_backtesting.backtest(y, ma)
             print('Strategy chosen, returns are being calculated.')
-            print("Moving Average Strategy Results:")
+            print("Moving Average Strategy Results: ")
         else:
             print('Choose another Strategy')
 
