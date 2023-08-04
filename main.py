@@ -33,18 +33,19 @@ while(key == 'Y'):
         user_input = input('Please enter a start date (MMDDYYYY) of which will contain ETF information until the end date of (yesterday). Note that the maximum range is 01012020: ')
     start_date = user_input
     y = y_instance.choose_date(etf, start_date)
-    graph_displayer = TickerGraphDisplayer(start_date)
+    #graph_displayer = TickerGraphDisplayer(start_date)
 
     print(f'Date is within expected range. Data will now range from {start_date} to yesterday\'s date.')
 
     # add graph here
     print(f'Displaying a graph and tabulated data ranging from {start_date} to {get_yesterday()}')
-    graph_displayer.display_graph_for_ticker(etf)
+    #graph_displayer.display_graph_for_ticker(etf)
 
     # Ask user for strategy
     strategy_map = {'B': 'Bollinger-Band-Bounce', 'M': 'Moving-Average', 'T': 'Trust the system'}
     user_input = None
     prompt = 'Y'
+    ll = strat
     while(prompt == 'Y'):
         while user_input not in strategy_map:
             user_input = input('Which type of strategy would the user like to use? Bollinger-Band-Bounce (B)\nMoving-Average (M)\nTrust the system (T)\n')
@@ -52,7 +53,9 @@ while(key == 'Y'):
         total_return_dollars = ''
         total_return_percentage = ''
         if user_input == 'B' or user_input == 'Bollinger-Band-Bounce':
-            d = give_date(y, strat.BandBounce(y))
+            d = give_date(y, ll.BandBounce(y))
+            forgraph = TickerGraphDisplayer(ll.getuBands(), ll.getlBands())
+            forgraph.display_band_bounce(etf)
             for x in d.items():
                 print(x)
                 # Initialize and backtest the BandBounce strategy

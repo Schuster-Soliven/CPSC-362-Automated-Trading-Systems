@@ -33,7 +33,21 @@ def check_window(etf_data=yf_api.choose_date('FNGU', '01012020')):
         return 1
 
 class strat(AllStrategies):
-    def BandBounce(file=yf_api.choose_date('FNGU', '01012020')):
+    def __init__(self):
+        self.uBand = []
+        self.lBand = []
+        self.avg = []
+
+    def getuBands(self):
+        return self.uBand
+    
+    def getlBands(self):
+        return self.lBand
+    
+    def getAvg(self):
+        return self.avg
+
+    def BandBounce(self, file=yf_api.choose_date('FNGU', '01012020')):
         '''
         Sends Buy/Sell/Null signals based on whether close market fall out of the standard deviation of the average market price based on a window of days
         '''
@@ -49,6 +63,9 @@ class strat(AllStrategies):
         uBand = mean + 2 * stdDev
         lBand = mean - 2 * stdDev
 
+        self.uBand = uBand.tolist()
+        self.lBand = lBand.tolist()
+
         #create list of calls to buy / sell / do nothing
         callist = []
         for n in range(len(file)):
@@ -63,7 +80,7 @@ class strat(AllStrategies):
         #call backtesting module
         return callist
 
-    def MovAvg(etf_data=yf_api.choose_date('FNGU', '01012020')):
+    def MovAvg(self, etf_data=yf_api.choose_date('FNGU', '01012020')):
         '''Take an average of a window of days and calculate whether the average line is crossed by the market close price'''
         # window is range of indices
         window = check_window(etf_data)
@@ -102,6 +119,7 @@ class strat(AllStrategies):
                 i += 1
             else:
                 print('do nothing')
+        self.avg = average
         # Checks if data points crosses average line. Returns list
         i = 0
         bs_list = [0]
@@ -116,3 +134,4 @@ class strat(AllStrategies):
                 bs_list.append(0) # do nothing
                 i+=1
         return bs_list
+    
