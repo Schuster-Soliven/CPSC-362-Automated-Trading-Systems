@@ -42,17 +42,18 @@ while(key == 'Y'):
     graph_displayer.display_graph_for_ticker(etf)
 
     # Ask user for strategy
-    strategy_map = {'B': 'Bollinger-Band-Bounce', 'M': 'Moving-Average', 'T': 'Trust the system'}
+    strategy_map = {'B': 'Bollinger-Band-Bounce', 'M': 'Moving-Average'}
     user_input = None
     prompt = 'Y'
+    total_return_dollars = ''
+    total_return_percentage = ''
+    ll = strat
     while(prompt == 'Y'):
         while user_input not in strategy_map:
-            user_input = input('Which type of strategy would the user like to use? Bollinger-Band-Bounce (B)\nMoving-Average (M)\nTrust the system (T)\n')
+            user_input = input('Which type of strategy would the user like to use? Bollinger-Band-Bounce (B)\nMoving-Average (M)\n')
         etf_data = y_instance.choose_date(etf, start_date)
-        total_return_dollars = ''
-        total_return_percentage = ''
         if user_input == 'B' or user_input == 'Bollinger-Band-Bounce':
-            d = give_date(y, strat.BandBounce(y))
+            d = give_date(y, ll.BandBounce(y))
             for x in d.items():
                 print(x)
                 # Initialize and backtest the BandBounce strategy
@@ -61,7 +62,7 @@ while(key == 'Y'):
             print('Strategy chosen, returns are being calculated.')
             print("BandBounce Strategy Results:")
         elif user_input == 'M' or user_input == 'Moving-Average':
-            d = give_date(y, strat.MovAvg(y))
+            d = give_date(y, ll.MovAvg(y))
             for x in d.items():
                 print(x)
                     # Initialize and backtest the MovAvg strategy
@@ -70,7 +71,7 @@ while(key == 'Y'):
             print('Strategy chosen, returns are being calculated.')
             print("Moving Average Strategy Results:")
         else:
-            print('Trust the System WIP')
+            print('Choose another Strategy')
 
         print("Total Return in Dollars:  $", total_return_dollars)
         print("Total Return in Percentage:", total_return_percentage, "%")

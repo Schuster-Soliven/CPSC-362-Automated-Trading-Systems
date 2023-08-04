@@ -2,13 +2,12 @@ from A_Backtesting import *
 from strat import *
 
 class Backtesting(A_Backtesting):
-    def __init__(self, strategy, etf_data, look_ahead=5):
+    def __init__(self, strategy, etf_data):
         self.strategy = strategy  # Selected trading strategy
         self.etf_data = etf_data  # Historical ETF data
         self.initial_balance = 100000  # Initial capital for trading
         self.balance = self.initial_balance  # Current available balance
         self.shares = 0  # Number of shares currently owned
-        self.look_ahead = look_ahead  # Number of days to look ahead to find the best price
 
     def backtest(self):
         # Determine the strategy's signals
@@ -22,6 +21,7 @@ class Backtesting(A_Backtesting):
         i = 0
         while i < len(signals):
             signal = signals[i]
+            price = self.etf_data['Close'][i]
 
             # If a sell signal is given but no shares are owned, skip to the next buy signal
             if signal == -1 and self.shares == 0:
@@ -29,27 +29,15 @@ class Backtesting(A_Backtesting):
                     i += 1
                 continue
 
-            best_index = i
-            best_price = self.etf_data['Close'][i]
-
-            # Look ahead to find the best price for buying or selling
-            for j in range(1, self.look_ahead):
-                if i + j >= len(signals) or signals[i + j] != signal:
-                    break
-                price = self.etf_data['Close'][i + j]
-                if (signal == 1 and price < best_price) or (signal == -1 and price > best_price):
-                    best_price = price
-                    best_index = i + j
-
             # Execute buy or sell order at the best price
             if signal == 1:  # Buy at the best price
-                self.shares += self.balance / best_price
+                self.shares += int(self.balance / price)
                 self.balance = 0
             elif signal == -1:  # Sell at the best price
-                self.balance += self.shares * best_price
+                self.balance += int(self.shares * price)
                 self.shares = 0
 
-            i = best_index + 1  # Move to the next index after executing the order
+            i += 1  # Move to the next index after executing the order
 
         # Sell any remaining shares at the last available price
         final_price = self.etf_data['Close'].iloc[-1]
