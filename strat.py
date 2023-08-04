@@ -2,13 +2,13 @@
 This file: strat.py
 Description: Module contains both Bollinger Band Bounce and Moving Average Crossover strategies
 '''
-from yf_api import choose_date
+from yf_api import *
 from allStrategies import *
-
-
     
-def give_date(etf_data=choose_date(), e_list=''):
-    '''affixes buy/sell signals a date and price in a dictionary'''
+def give_date(etf_data=yf_api.choose_date('FNGU', '01012020'), e_list=''):
+    '''
+    Affixes buy/sell signals a date and price in a dictionary
+    '''
     c_data = etf_data['Close']
     d_data = etf_data['Date']
     new_list = {}
@@ -18,8 +18,10 @@ def give_date(etf_data=choose_date(), e_list=''):
         i += 1
     return new_list
 
-def check_window(etf_data):
-    '''Check if the window will fit b/w user chosen date period'''
+def check_window(etf_data=yf_api.choose_date('FNGU', '01012020')):
+    '''
+    Check if the window will fit b/w user chosen date period
+    '''
     etf_data = etf_data
     if len(etf_data) <= 20:
         return 5
@@ -29,9 +31,32 @@ def check_window(etf_data):
         return 3
     else:
         return 1
+    
+def bound_to_list(etf_data, lst):
+    index = 0
+    while (index < 20):
+        if (lst[index] == 'nan'):
+            lst[index] = etf_data[index]
+        else:
+            break
+    return lst
 
 class strat(AllStrategies):
-    def BandBounce(file):
+    def __init__(self):
+        self._uBand = []
+        self._lBand = []
+        self._avg = []
+
+    def getuBands(self):
+        return self._uBand
+    
+    def getlBands(self):
+        return self._lBand
+    
+    def getAvg(self):
+        return self._avg
+    
+    def BandBounce(self, file=yf_api.choose_date('FNGU', '01012020')):
         '''
         Sends Buy/Sell/Null signals based on whether close market fall out of the standard deviation of the average market price based on a window of days
         '''
@@ -44,8 +69,12 @@ class strat(AllStrategies):
         window = check_window(file)
         mean = file.rolling(window).mean()
         stdDev = file.rolling(window).std()
-        uBand = mean + 2 * stdDev
-        lBand = mean - 2 * stdDev
+        uBand = mean + (2 * stdDev)
+        lBand = mean - (2 * stdDev)
+
+        self._uBand = bound_to_list(file, uBand) 
+        self._lBand = bound_to_list(file, lBand)
+
 
         #create list of calls to buy / sell / do nothing
         callist = []
@@ -55,13 +84,13 @@ class strat(AllStrategies):
                 callist.append(-1)
             elif file[n] < lBand[n]:   # buy (1)
                 callist.append(1)
-            else:                   #do nothing (0)
+            else:                   # do nothing (0)
                 callist.append(0)
 
         #call backtesting module
         return callist
 
-    def MovAvg(etf_data=choose_date()):
+    def MovAvg(self, etf_data=yf_api.choose_date('FNGU', '01012020')):
         '''Take an average of a window of days and calculate whether the average line is crossed by the market close price'''
         # window is range of indices
         window = check_window(etf_data)
@@ -100,7 +129,7 @@ class strat(AllStrategies):
                 i += 1
             else:
                 print('do nothing')
-
+        self._avg = average_list
         # Checks if data points crosses average line. Returns list
         i = 0
         bs_list = [0]
