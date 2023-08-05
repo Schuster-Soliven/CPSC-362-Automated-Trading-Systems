@@ -1,3 +1,6 @@
+'''
+Calculates returns from strat.py and return a percentage and dollar amount
+'''
 from A_Backtesting import *
 from strat import *
 
@@ -9,7 +12,7 @@ class Backtesting(A_Backtesting):
         self.shares = 0  # Number of shares currently owned
 
     def backtest(self, etf_data, strat):
-        # Determine the strategy's signals
+        # Determine the strategy's signals given etf_data and signals passed through
         if self.strategy == 'BandBounce':
             signals = strat
         elif self.strategy == 'MovAvg':
