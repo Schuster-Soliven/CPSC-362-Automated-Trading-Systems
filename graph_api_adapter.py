@@ -1,28 +1,28 @@
-# Import the choose_date function from yf_api module
+'''
+An adaptor class between displayGraph and strat that allows data to be taken from strat to be plotted in displayGraph
+'''
 from yf_api import *
 from strat import *
-
-# Import the DisplayGraph class from displayGraph module
 from displayGraph import DisplayGraph
 
 # Define a class named TickerGraphDisplayer to display graphs for tickers
 class TickerGraphDisplayer(DisplayGraph):
-    #def __init__(self, start_date):
-        # Constructor takes start_date as an argument and initializes the instance variable
-        #self.start_date = start_date
-
     def __init__(self, strat_ = strat, start_date_ = '01012020'):
         self.start_date_ = start_date_
         self.strat_ = strat_
 
     def get_start_date(self):
+        '''return start date'''
         return self.start_date_
         
     def get_strat_(self):
+        '''return strat object'''
         return self.strat_
     
     def display_graph_for_ticker(self, etf_data):
-        # This method takes a ticker symbol and uses it to fetch data for the given date, '01012020', using the choose_date function
+        '''
+        Takes in etf close price data to call displayGraph's plot_data
+        '''
 
         # Call the plot_data method of the DisplayGraph instance to plot the graph
         dG = DisplayGraph(etf_data, self.start_date_)
@@ -32,6 +32,9 @@ class TickerGraphDisplayer(DisplayGraph):
     
     
     def display_band_bounce(self, etf_data):
+        '''
+        Takes upper and lower bounds of strat after a BandBoudn has been called to DisplayGraph via add_line to plot upper, lower, and Close price data onto a graph
+        '''
         bb_graph = DisplayGraph(etf_data, self.start_date_)
         self.strat_.BandBounce(etf_data)
         ub = self.strat_.getuBands()
@@ -42,6 +45,9 @@ class TickerGraphDisplayer(DisplayGraph):
         bb_graph.plot_data()
 
     def display_moving_average(self, etf_data):
+        '''
+        Takes the moving average data of strat after movavg has been called to DisplayGraph via add_line to plot Moving Average and Close price data onto a graph
+        '''
         ma_graph = DisplayGraph(etf_data, self.start_date_)
         self.strat_.MovAvg(etf_data)
         avg = self.strat_.getAvg()
