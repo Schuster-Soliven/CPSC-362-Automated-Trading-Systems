@@ -1,3 +1,6 @@
+'''
+A context class supporting a strategy pattern for the AllStrategies subclasses
+'''
 from yf_api import *
 from strat import *
 from exampleSubclass import *
