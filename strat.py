@@ -33,6 +33,9 @@ def check_window(etf_data=yf_api.choose_date('FNGU', '01012020')):
         return 1
     
 def bound_to_list(etf_data, lst):
+    '''
+    Removes nan from upper and lower bound lists 
+    '''
     index = 0
     while (index < 20):
         if (lst[index] == 'nan'):
@@ -48,12 +51,15 @@ class strat(AllStrategies):
         self._avg = []
 
     def getuBands(self):
+        '''return upper band'''
         return self._uBand
     
     def getlBands(self):
+        '''return lower band'''
         return self._lBand
     
     def getAvg(self):
+        '''return moving average'''
         return self._avg
     
     def BandBounce(self, file=yf_api.choose_date('FNGU', '01012020')):
