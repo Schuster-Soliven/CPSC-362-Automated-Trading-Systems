@@ -1,3 +1,6 @@
+'''
+DisplayGraph class that displays a graph using Close Price vs Date
+'''
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -13,10 +16,11 @@ class DisplayGraph(A_display_graph):
         self.lst = []
 
     def add_line(self, name, data):
+        '''Adds a Dictionary of desired data to be plotted based on the name and list of data'''
         self.lst.append({name : data})
 
     def plot_data(self):
-        # Create a new figure with specific size
+        '''Plots the data points onto the graph depending on contents of lst'''
         oG = plt
         oG.figure(figsize=(12, 6))
         # Plot the 'Close' column against the 'Date' column
