@@ -1,3 +1,6 @@
+'''
+A subclass of AllStrategies for the purpose of demonstrating the Strategy pattern
+'''
 from allStrategies import *
 
 class exampleSubclass(AllStrategies):
