@@ -37,11 +37,11 @@ while(key == 'Y'):
 
     print(f'Date is within expected range. Data will now range from {start_date} to yesterday\'s date.')
 
-    # add graph here
+    # Display Graph
     print(f'Displaying a graph and tabulated data ranging from {start_date} to {get_yesterday()}')
     graph_displayer.display_graph_for_ticker(y)
 
-    # Ask user for strategy
+    # Ask user for strategy to use
     strategy_map = {'B': 'Bollinger-Band-Bounce', 'M': 'Moving-Average'}
     user_input = None
     prompt = 'Y'
@@ -55,10 +55,11 @@ while(key == 'Y'):
             bb = ll.BandBounce(y)
             d = give_date(y, ll.BandBounce(y))
             bb_graph = TickerGraphDisplayer(ll, start_date)
+            # Display Band Bounce Graph
             bb_graph.display_band_bounce(y)
             for x in d.items():
                 print(x)
-                # Initialize and backtest the BandBounce strategy
+            # Initialize and backtest the BandBounce strategy
             band_bounce_backtesting = Backtesting('BandBounce')
             total_return_dollars, total_return_percentage = band_bounce_backtesting.backtest(y, bb)
             print('Strategy chosen, returns are being calculated.')
@@ -67,10 +68,11 @@ while(key == 'Y'):
             ma = ll.MovAvg(y)
             d = give_date(y, ll.MovAvg(y))
             ma_graph = TickerGraphDisplayer(ll, start_date)
+            # Display moving average graph
             ma_graph.display_moving_average(y)
             for x in d.items():
                 print(x)
-                    # Initialize and backtest the MovAvg strategy
+            # Initialize and backtest the MovAvg strategy
             mov_avg_backtesting = Backtesting('MovAvg')
             total_return_dollars, total_return_percentage = mov_avg_backtesting.backtest(y, ma)
             print('Strategy chosen, returns are being calculated.')
